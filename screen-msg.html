@@ -1,0 +1,66 @@
+<html>
+<style type="text/css">
+    body {
+        background-color: #1d1d1d;
+        color: white;
+        border: 0px;
+    }
+    #textarea, #test {
+        background-color: #1d1d1d;
+        color: #fafafa;
+        font-family: sans;
+        position: absolute;
+        top: 0px;
+        left: 0px;
+        border: 0px;
+        margin: 0px;
+    }
+    #textarea {
+        width: 100%;
+        height: 100%;
+        white-space: nowrap;
+        padding: 0px;
+        text-align: center;
+        overflow: hidden;
+    }
+    #test {
+        visibility: hidden;
+        position: absolute;
+        font-size: 12px;
+        white-space: pre;
+        padding: 0.1em;
+    }
+</style>
+<script type="text/javascript">
+    function adjust() {
+        ta = document.getElementById("textarea");
+        test = document.getElementById("test");
+        test.innerHTML = ta.value;
+
+        // Otherwise, the newline would not be counted.
+        if (ta.value[ta.value.length - 1] == "\n") {
+            test.innerHTML += '.';
+        }
+
+        ratioX = (window.innerWidth) / test.offsetWidth;
+        ratioY = (window.innerHeight) / test.offsetHeight;
+        ratio = Math.min(ratioX, ratioY);
+        ta.style.fontSize = Math.floor(12 * ratio) + "px";
+
+        newHeight = Math.ceil(test.offsetHeight * ratio);
+        ta.style.paddingTop = Math.floor((window.innerHeight - newHeight) / 2) + "px";
+    }
+
+    function init() {
+        ta = document.getElementById("textarea");
+        ta.focus();
+        adjust();
+    }
+</script>
+
+<body onload="init()">
+    <textarea id="textarea" onkeyup="adjust()"></textarea>
+    <span id="test"></span>
+</body>
+
+</html>
